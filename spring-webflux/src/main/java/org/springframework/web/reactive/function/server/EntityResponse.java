@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,6 +17,7 @@
 package org.springframework.web.reactive.function.server;
 
 import java.net.URI;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -43,6 +44,7 @@ import org.springframework.web.reactive.function.BodyInserters;
  * @author Arjen Poutsma
  * @author Juergen Hoeller
  * @since 5.0
+ * @param <T> the entity type
  */
 public interface EntityResponse<T> extends ServerResponse {
 
@@ -100,6 +102,8 @@ public interface EntityResponse<T> extends ServerResponse {
 
 	/**
 	 * Defines a builder for {@code EntityResponse}.
+	 *
+	 * @param <T> a self reference to the builder type
 	 */
 	interface Builder<T> {
 
@@ -173,11 +177,11 @@ public interface EntityResponse<T> extends ServerResponse {
 
 		/**
 		 * Set the entity tag of the body, as specified by the {@code ETag} header.
-		 * @param eTag the new entity tag
+		 * @param etag the new entity tag
 		 * @return this builder
 		 * @see HttpHeaders#setETag(String)
 		 */
-		Builder<T> eTag(String eTag);
+		Builder<T> eTag(String etag);
 
 		/**
 		 * Set the time the resource was last changed, as specified by the
@@ -189,6 +193,18 @@ public interface EntityResponse<T> extends ServerResponse {
 		 * @see HttpHeaders#setLastModified(long)
 		 */
 		Builder<T> lastModified(ZonedDateTime lastModified);
+
+		/**
+		 * Set the time the resource was last changed, as specified by the
+		 * {@code Last-Modified} header.
+		 * <p>The date should be specified as the number of milliseconds since
+		 * January 1, 1970 GMT.
+		 * @param lastModified the last modified date
+		 * @return this builder
+		 * @since 5.1.4
+		 * @see HttpHeaders#setLastModified(long)
+		 */
+		Builder<T> lastModified(Instant lastModified);
 
 		/**
 		 * Set the location of a resource, as specified by the {@code Location} header.

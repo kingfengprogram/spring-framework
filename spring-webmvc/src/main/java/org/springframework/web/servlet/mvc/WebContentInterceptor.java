@@ -1,11 +1,11 @@
 /*
- * Copyright 2002-2017 the original author or authors.
+ * Copyright 2002-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -138,7 +138,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * matches several mappings, it is effectively undefined which one will apply
 	 * (due to the lack of key ordering in the underlying {@code java.util.HashMap}).
 	 * @param cacheControl the {@code CacheControl} to use
-	 * @param paths URL paths that will map to the given {@code CacheControl}
+	 * @param paths the URL paths that will map to the given {@code CacheControl}
 	 * @since 4.2
 	 * @see #setCacheSeconds
 	 * @see org.springframework.util.AntPathMatcher
@@ -200,7 +200,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * <p>Supports direct matches, e.g. a registered "/test" matches "/test",
 	 * and various Ant-style pattern matches, e.g. a registered "/t*" matches
 	 * both "/test" and "/team". For details, see the AntPathMatcher class.
-	 * @param urlPath URL the bean is mapped to
+	 * @param urlPath the URL the bean is mapped to
 	 * @return the associated {@code CacheControl}, or {@code null} if not found
 	 * @see org.springframework.util.AntPathMatcher
 	 */
@@ -225,7 +225,7 @@ public class WebContentInterceptor extends WebContentGenerator implements Handle
 	 * <p>Supports direct matches, e.g. a registered "/test" matches "/test",
 	 * and various Ant-style pattern matches, e.g. a registered "/t*" matches
 	 * both "/test" and "/team". For details, see the AntPathMatcher class.
-	 * @param urlPath URL the bean is mapped to
+	 * @param urlPath the URL the bean is mapped to
 	 * @return the cacheSeconds integer value, or {@code null} if not found
 	 * @see org.springframework.util.AntPathMatcher
 	 */

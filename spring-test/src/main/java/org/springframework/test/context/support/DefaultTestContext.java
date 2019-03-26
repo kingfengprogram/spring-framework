@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -100,9 +100,9 @@ public class DefaultTestContext implements TestContext {
 	 * test context.
 	 * <p>The default implementation delegates to the {@link CacheAwareContextLoaderDelegate}
 	 * that was supplied when this {@code TestContext} was constructed.
-	 * @see CacheAwareContextLoaderDelegate#loadContext
 	 * @throws IllegalStateException if the context returned by the context
 	 * loader delegate is not <em>active</em> (i.e., has been closed).
+	 * @see CacheAwareContextLoaderDelegate#loadContext
 	 */
 	public ApplicationContext getApplicationContext() {
 		ApplicationContext context = this.cacheAwareContextLoaderDelegate.loadContext(this.mergedContextConfiguration);
@@ -110,7 +110,7 @@ public class DefaultTestContext implements TestContext {
 			@SuppressWarnings("resource")
 			ConfigurableApplicationContext cac = (ConfigurableApplicationContext) context;
 			Assert.state(cac.isActive(), () ->
-					"The ApplicationContext loaded for [" + mergedContextConfiguration +
+					"The ApplicationContext loaded for [" + this.mergedContextConfiguration +
 					"] is not active. This may be due to one of the following reasons: " +
 					"1) the context was closed programmatically by user code; " +
 					"2) the context was closed during parallel test execution either " +

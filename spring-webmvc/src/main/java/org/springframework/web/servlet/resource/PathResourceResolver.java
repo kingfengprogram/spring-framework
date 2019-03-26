@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -157,7 +157,15 @@ public class PathResourceResolver extends AbstractResourceResolver {
 				}
 			}
 			catch (IOException ex) {
-				logger.trace("Failed to get resource, skipping location: " + location, ex);
+				if (logger.isDebugEnabled()) {
+					String error = "Skip location [" + location + "] due to error";
+					if (logger.isTraceEnabled()) {
+						logger.trace(error, ex);
+					}
+					else {
+						logger.debug(error + ": " + ex.getMessage());
+					}
+				}
 			}
 		}
 		return null;
@@ -276,9 +284,7 @@ public class PathResourceResolver extends AbstractResourceResolver {
 			try {
 				String decodedPath = URLDecoder.decode(resourcePath, "UTF-8");
 				if (decodedPath.contains("../") || decodedPath.contains("..\\")) {
-					if (logger.isTraceEnabled()) {
-						logger.trace("Resolved resource path contains encoded \"../\" or \"..\\\": " + resourcePath);
-					}
+					logger.warn("Resolved resource path contains encoded \"../\" or \"..\\\": " + resourcePath);
 					return true;
 				}
 			}

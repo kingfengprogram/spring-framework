@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -104,7 +104,7 @@ public final class ResponseCookie extends HttpCookie {
 
 	/**
 	 * Return {@code true} if the cookie has the "HttpOnly" attribute.
-	 * @see <a href="http://www.owasp.org/index.php/HTTPOnly">http://www.owasp.org/index.php/HTTPOnly</a>
+	 * @see <a href="https://www.owasp.org/index.php/HTTPOnly">https://www.owasp.org/index.php/HTTPOnly</a>
 	 */
 	public boolean isHttpOnly() {
 		return this.httpOnly;
@@ -115,11 +115,13 @@ public final class ResponseCookie extends HttpCookie {
 	 * <p>This limits the scope of the cookie such that it will only be attached to
 	 * same site requests if {@code "Strict"} or cross-site requests if {@code "Lax"}.
 	 * @see <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.2.7">RFC6265 bis</a>
+	 * @since 5.1
 	 */
 	@Nullable
 	public String getSameSite() {
 		return this.sameSite;
 	}
+
 
 	@Override
 	public boolean equals(Object other) {
@@ -235,7 +237,7 @@ public final class ResponseCookie extends HttpCookie {
 			}
 
 			@Override
-			public ResponseCookieBuilder sameSite(String sameSite) {
+			public ResponseCookieBuilder sameSite(@Nullable String sameSite) {
 				this.sameSite = sameSite;
 				return this;
 			}
@@ -286,7 +288,7 @@ public final class ResponseCookie extends HttpCookie {
 
 		/**
 		 * Add the "HttpOnly" attribute to the cookie.
-		 * @see <a href="http://www.owasp.org/index.php/HTTPOnly">http://www.owasp.org/index.php/HTTPOnly</a>
+		 * @see <a href="https://www.owasp.org/index.php/HTTPOnly">https://www.owasp.org/index.php/HTTPOnly</a>
 		 */
 		ResponseCookieBuilder httpOnly(boolean httpOnly);
 
@@ -295,9 +297,10 @@ public final class ResponseCookie extends HttpCookie {
 		 * <p>This limits the scope of the cookie such that it will only be
 		 * attached to same site requests if {@code "Strict"} or cross-site
 		 * requests if {@code "Lax"}.
+		 * @since 5.1
 		 * @see <a href="https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis#section-4.1.2.7">RFC6265 bis</a>
 		 */
-		ResponseCookieBuilder sameSite(String sameSite);
+		ResponseCookieBuilder sameSite(@Nullable String sameSite);
 
 		/**
 		 * Create the HttpCookie.

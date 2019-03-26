@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,7 +18,6 @@ package org.springframework.web.reactive.function.server;
 
 import java.nio.charset.StandardCharsets;
 
-import org.junit.Before;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
@@ -38,17 +37,12 @@ import static org.junit.Assert.*;
  */
 public class DefaultServerRequestBuilderTests {
 
-	private DataBufferFactory dataBufferFactory;
+	private final DataBufferFactory dataBufferFactory = new DefaultDataBufferFactory();
 
-	@Before
-	public void createBufferFactory() {
-		this.dataBufferFactory = new DefaultDataBufferFactory();
-	}
 
 	@Test
-	public void from() throws Exception {
-
-		MockServerHttpRequest request = MockServerHttpRequest.post("http://example.com")
+	public void from() {
+		MockServerHttpRequest request = MockServerHttpRequest.post("https://example.com")
 				.header("foo", "bar")
 				.build();
 		MockServerWebExchange exchange = MockServerWebExchange.from(request);

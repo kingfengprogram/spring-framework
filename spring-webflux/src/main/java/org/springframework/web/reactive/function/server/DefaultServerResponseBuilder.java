@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,6 +34,7 @@ import org.reactivestreams.Publisher;
 import reactor.core.publisher.Mono;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.codec.Hints;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -158,7 +159,13 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 	@Override
 	public ServerResponse.BodyBuilder lastModified(ZonedDateTime lastModified) {
-		this.headers.setZonedDateTime(HttpHeaders.LAST_MODIFIED, lastModified);
+		this.headers.setLastModified(lastModified);
+		return this;
+	}
+
+	@Override
+	public ServerResponse.BodyBuilder lastModified(Instant lastModified) {
+		this.headers.setLastModified(lastModified);
 		return this;
 	}
 
@@ -170,10 +177,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 
 	@Override
 	public ServerResponse.BodyBuilder cacheControl(CacheControl cacheControl) {
-		String ccValue = cacheControl.getHeaderValue();
-		if (ccValue != null) {
-			this.headers.setCacheControl(cacheControl.getHeaderValue());
-		}
+		this.headers.setCacheControl(cacheControl);
 		return this;
 	}
 
@@ -272,6 +276,9 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 	}
 
 
+	/**
+	 * Abstract base class for {@link ServerResponse} implementations.
+	 */
 	abstract static class AbstractServerResponse implements ServerResponse {
 
 		private static final Set<HttpMethod> SAFE_METHODS = EnumSet.of(HttpMethod.GET, HttpMethod.HEAD);
@@ -308,7 +315,6 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 		@Override
 		public final Mono<Void> writeTo(ServerWebExchange exchange, Context context) {
 			writeStatusAndHeaders(exchange.getResponse());
-
 			Instant lastModified = Instant.ofEpochMilli(headers().getLastModified());
 			HttpMethod httpMethod = exchange.getRequest().getMethod();
 			if (SAFE_METHODS.contains(httpMethod) && exchange.checkNotModified(headers().getETag(), lastModified)) {
@@ -396,6 +402,7 @@ class DefaultServerResponseBuilder implements ServerResponse.BodyBuilder {
 				}
 				@Override
 				public Map<String, Object> hints() {
+					hints.put(Hints.LOG_PREFIX_HINT, exchange.getLogPrefix());
 					return hints;
 				}
 			});

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -167,9 +167,7 @@ public class FreeMarkerView extends AbstractUrlBasedView {
 			return true;
 		}
 		catch (FileNotFoundException ex) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("No FreeMarker view found for URL: " + getUrl());
-			}
+			// Allow for ViewResolver chaining...
 			return false;
 		}
 		catch (ParseException ex) {
@@ -188,8 +186,9 @@ public class FreeMarkerView extends AbstractUrlBasedView {
 
 		// Expose all standard FreeMarker hash models.
 		SimpleHash freeMarkerModel = getTemplateModel(renderAttributes, exchange);
+
 		if (logger.isDebugEnabled()) {
-			logger.debug("Rendering FreeMarker template [" + getUrl() + "].");
+			logger.debug(exchange.getLogPrefix() + "Rendering [" + getUrl() + "]");
 		}
 
 		Locale locale = LocaleContextHolder.getLocale(exchange.getLocaleContext());

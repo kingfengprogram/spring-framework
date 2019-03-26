@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -133,7 +133,7 @@ public class SimpleMappingExceptionResolver extends AbstractHandlerExceptionReso
 	 * Keys are view names; values are status codes.
 	 */
 	public Map<String, Integer> getStatusCodesAsMap() {
-		return Collections.unmodifiableMap(statusCodes);
+		return Collections.unmodifiableMap(this.statusCodes);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class SimpleMappingExceptionResolver extends AbstractHandlerExceptionReso
 	 * from within an include.
 	 * <p>If not specified, no status code will be applied, either leaving this to the
 	 * controller or view, or keeping the servlet engine's default of 200 (OK).
-	 * @param defaultStatusCode HTTP status code value, for example 500
+	 * @param defaultStatusCode the HTTP status code value, for example 500
 	 * ({@link HttpServletResponse#SC_INTERNAL_SERVER_ERROR}) or 404 ({@link HttpServletResponse#SC_NOT_FOUND})
 	 * @see #setStatusCodes(Properties)
 	 */

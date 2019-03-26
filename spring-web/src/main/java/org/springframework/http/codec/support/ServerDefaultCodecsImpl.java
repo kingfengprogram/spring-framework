@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *      https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,6 +29,8 @@ import org.springframework.util.ClassUtils;
 
 /**
  * Default implementation of {@link ServerCodecConfigurer.ServerDefaultCodecs}.
+ *
+ * @author Rossen Stoyanchev
  */
 class ServerDefaultCodecsImpl extends BaseDefaultCodecs implements ServerCodecConfigurer.ServerDefaultCodecs {
 
@@ -50,9 +52,15 @@ class ServerDefaultCodecsImpl extends BaseDefaultCodecs implements ServerCodecCo
 	@Override
 	protected void extendTypedReaders(List<HttpMessageReader<?>> typedReaders) {
 		if (synchronossMultipartPresent) {
+			boolean enable = isEnableLoggingRequestDetails();
+
 			SynchronossPartHttpMessageReader partReader = new SynchronossPartHttpMessageReader();
+			partReader.setEnableLoggingRequestDetails(enable);
 			typedReaders.add(partReader);
-			typedReaders.add(new MultipartHttpMessageReader(partReader));
+
+			MultipartHttpMessageReader reader = new MultipartHttpMessageReader(partReader);
+			reader.setEnableLoggingRequestDetails(enable);
+			typedReaders.add(reader);
 		}
 	}
 
